@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: www-data
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: uas-back
+    container_name: uas-back-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - uasback
+
+  nginx:
+    image: nginx:alpine
+    container_name: uas-back-nginx
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - uasback
+
+networks:
+  uasback:
+    driver: bridge
