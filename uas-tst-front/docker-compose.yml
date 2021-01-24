@@ -3,12 +3,12 @@ services:
   app:
     build:
       args:
-        user: www-data
+        user: vincent
         uid: 1000
       context: ./
       dockerfile: Dockerfile
-    image: uas-front
-    container_name: uas-front-app
+    image: uasfront
+    container_name: uasfront-app
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
@@ -18,10 +18,10 @@ services:
 
   nginx:
     image: nginx:alpine
-    container_name: uas-front-nginx
+    container_name: uasfront-nginx
     restart: unless-stopped
     ports:
-      - 9000:80
+      - 8000:80
     volumes:
       - ./:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d/
